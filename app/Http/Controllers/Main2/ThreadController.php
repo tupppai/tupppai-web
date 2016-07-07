@@ -193,4 +193,25 @@ class ThreadController extends ControllerBase{
 
         return $this->output(['charge'=>$charge]);
     }
+
+    public function latest(){
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 15);
+
+        $replies = sReply::getReplies([], $page, $size );
+
+        return $this->output( $replies );
+    }
+
+    public function hot(){
+        $page  = $this->get('page', 'int', 1);
+        $size  = $this->get('size', 'int', 15);
+
+        $threads = sThreadCategory::getPopularThreads( 'pc', $page, $size );
+        $data    = [];
+        foreach($threads as $thread) {
+            $data[] = sThreadCategory::brief($thread);
+        }
+        return $this->output( $data );
+    }
 }
