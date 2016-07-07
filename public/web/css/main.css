@@ -427,6 +427,20 @@ input::-webkit-input-placeholder {
 .resgister-popup .right-login .login-input .password {
   border-bottom: 1px solid #eaeaea;
   margin-top: 20px;
+  position: relative;
+}
+.resgister-popup .right-login .login-input .password #gain-code {
+  font-size: 14px;
+  text-align: center;
+  border-radius: 5px;
+  top: 0px;
+  right: 1px;
+  background: #e8e8e8;
+  color: #c5c5c5;
+  width: 90px;
+  height: 30px;
+  line-height: 30px;
+  position: absolute;
 }
 .resgister-popup .right-login .login-input .password input {
   font-size: 16px;
@@ -699,237 +713,26 @@ _activityList > div {
   margin-right: 16px;
 }
 
-.common-footer {
-  background: #f4f4f6;
-  height: 160px;
-}
-.common-footer .footer {
-  width: 650px;
-  margin: 0 auto;
-  font-size: 18px;
-  height: 160px;
-}
-.common-footer .footer .tupppai-message {
-  margin-right: 40px;
-}
-.common-footer .footer .tupppai-top {
-  margin-top: 45px;
-}
-.common-footer .footer .tupppai-footer {
-  margin-top: 20px;
-}
-.common-footer .footer .app-section .wb {
-  width: 52px;
-  text-align: center;
-  margin-top: 40px;
-  display: inline-block;
-  vertical-align: top;
-  margin-right: 40px;
-}
-.common-footer .footer .app-section .wb .wb-icon {
-  background: url('/web/img/sina.png') no-repeat;
-  display: inline-block;
-  width: 60px;
-  height: 60px;
-  vertical-align: text-top;
-}
-.common-footer .footer .app-section .wx-user {
-  width: 56px;
-  text-align: center;
-  margin-top: 40px;
-  display: inline-block;
-  vertical-align: top;
-  margin-right: 40px;
-}
-.common-footer .footer .app-section .wx-user .wx-icon {
-  background: url('/web/img/wechat.png') no-repeat;
-  display: inline-block;
-  width: 60px;
-  height: 60px;
-  vertical-align: text-top;
-  background-position: 2px 0px;
-}
-.common-footer .footer .app-section .qq {
-  width: 52px;
-  text-align: center;
-  margin-top: 40px;
-  display: inline-block;
-  vertical-align: top;
-  margin-right: 40px;
-}
-.common-footer .footer .app-section .qq .qq-icon {
-  background: url('/web/img/wechat.png') no-repeat;
-  display: inline-block;
-  width: 60px;
-  height: 60px;
-  vertical-align: text-top;
-}
-
-.common-header {
-  height: 59px;
-  border-bottom: 3px solid #f5f5f5;
-  margin-bottom: 10px;
-}
-.common-header .header-section {
-  width: 1080px;
-  margin: 20px auto 0;
-  padding-bottom: 20px;
-}
-.common-header .header-section .logo {
-  float: left;
-  height: 60px;
-  line-height: 60px;
-}
-.common-header .header-section .logo img {
-  margin-top: 4px;
-}
-.common-header .header-section .header-nav {
-  float: left;
-  margin-left: 65px;
-  height: 55px;
-  font-size: 20px;
-}
-.common-header .header-section .header-nav .home-press {
-  border-bottom: 3px solid #f9d160;
-}
-.common-header .header-section .header-nav .home-press a {
-  color: #f9d160;
-}
-.common-header .header-section .header-nav .home-press .home-press-icon {
-  background: url('/web/img/home.png') no-repeat !important;
-  display: inline-block;
-  width: 22px;
-  height: 23px;
-  vertical-align: sub;
-}
-.common-header .header-section .header-nav .home-icon {
-  background: url('/web/img/home_gray.png') no-repeat;
-  display: inline-block;
-  width: 22px;
-  height: 23px;
-  vertical-align: sub;
-}
-.common-header .header-section .header-nav li {
-  width: 70px;
-  text-align: center;
-  height: 55px;
-  line-height: 68px;
-  color: #32303e;
-  float: left;
-  margin: 0 20px;
-}
-.common-header .header-section .register {
-  float: right;
-  width: 210px;
-  margin-right: -10px;
-}
-.common-header .header-section .register .login {
-  float: left;
-}
-.common-header .header-section .register .login .user-avatar:hover .avatar-nav {
-  display: inline-block !important;
-}
-.common-header .header-section .register .login .user-avatar {
-  float: left;
-  line-height: 15px;
-  margin-top: 15px;
-  margin-right: 40px;
-  border-radius: 3px;
-  margin-left: -40px;
-  width: 44px;
-  height: 44px;
-  border: 1px solid #fad263;
-  position: relative;
-}
-.common-header .header-section .register .login .user-avatar .avatar-nav {
-  position: absolute;
-  top: 47px;
-  left: -20px;
-  width: 160px;
-  height: 180px;
-  z-index: 9999;
-  display: none;
-}
-.common-header .header-section .register .login .user-avatar .avatar-nav li {
-  width: 160px;
-  height: 60px;
-  background: #fff;
-  border-bottom: 1px solid #eaeaec;
-  border-left: 1px solid #eaeaec;
-  border-right: 1px solid #eaeaec;
-  font-size: 16px;
-  line-height: 60px;
-  text-align: center;
-}
-.common-header .header-section .register .login .user-avatar .avatar-nav li i {
-  display: inline-block;
-  width: 22px;
-  height: 26px;
-  vertical-align: middle;
-}
-.common-header .header-section .register .login .user-avatar .avatar-nav li .home-icon {
-  background: url('/web/img/home_gray.png');
-  background-repeat: no-repeat;
-  background-position: 1px 0px;
-  margin-right: 5px;
-}
-.common-header .header-section .register .login .user-avatar .avatar-nav li .setting-icon {
-  background: url('/web/img/set.png');
-  background-repeat: no-repeat;
-  background-position: 1px 0px;
-  margin-right: 5px;
-}
-.common-header .header-section .register .login .user-avatar .avatar-nav li .exit-icon {
-  background: url('/web/img/home.png');
-  background-repeat: no-repeat;
-  background-position: 1px 0px;
-  margin-right: 5px;
-}
-.common-header .header-section .register .login .user-avatar img {
-  width: 100%;
-}
-.common-header .header-section .register .login .information {
-  font-size: 14px;
-  float: left;
-  margin-top: 20px;
-  margin-right: 35px;
-}
-.common-header .header-section .register .login .information .information-icon {
-  background: url('/web/img/alarm.png') no-repeat;
-  display: inline-block;
-  width: 22px;
-  height: 23px;
-  vertical-align: text-top;
-}
-.common-header .header-section .register .register-btn {
-  float: left;
-  font-size: 14px;
-  color: #a0a0a0;
-  height: 60px;
-  line-height: 60px;
-}
-.common-header .header-section .register .register-icon {
-  background: url('/web/img/log_in.png') no-repeat;
-  display: inline-block;
-  width: 22px;
-  height: 23px;
-  vertical-align: text-top;
-}
-.common-header .header-section .register .ask-button {
-  float: right;
-  height: 40px;
-  margin-top: 8px;
-}
-
 .channel-ask {
-  width: 880px;
-  margin: 0 auto 30px 50px;
+  width: 920px;
+  margin: 0 auto 30px 30px;
   float: left;
+}
+.channel-ask .work-content .work-card:hover {
+  width: 259px;
+  -webkit-box-shadow: 0 0 10px rgba(0, 204, 204, 0.5) black, 0 0 10px 20px red;
+  -moz-box-shadow: 0 0 10px 5px black, 0 0 10px 20px red;
+  box-shadow: 0 2px 13px #f6e1b8;
+  border: 0px;
+}
+.channel-ask .work-content .work-card:hover .follow-btn {
+  display: inline-block !important;
 }
 .channel-ask .work-content .work-card {
   width: 260px;
   float: left;
-  border: 1px solid #d6d5da;
+  border: 1px solid #f2f2f2;
+  margin: 0 20px 20px;
 }
 .channel-ask .work-content .work-card .header {
   height: 60px;
@@ -952,6 +755,7 @@ _activityList > div {
 }
 .channel-ask .work-content .work-card .header .follow-btn {
   float: right;
+  display: none;
   margin: 16px 10px;
   font-size: 14px;
   width: 60px;
@@ -1008,13 +812,71 @@ _activityList > div {
   border-bottom: 3px solid #f9d15f;
 }
 
-.channel-work {
-  width: 880px;
-  margin: 0 auto 30px 50px;
+#_navList {
+  width: 1080px;
+  margin: 0 auto;
+}
+#_navList .channel-list {
   float: left;
+  width: 165px;
+  min-height: 760px;
+}
+#_navList .channel-list .selected {
+  background: #f9d160;
+}
+#_navList .channel-list .selected .triangle-icon {
+  background: url('/web/img/sanjiao.png') no-repeat;
+  display: inline-block;
+  width: 15px;
+  height: 24px;
+  vertical-align: middle;
+  position: absolute;
+  right: -15px;
+  top: 20px;
+}
+#_navList .channel-list .selected .grayscaled_icon {
+  display: none !important;
+}
+#_navList .channel-list .selected .icon {
+  display: inline-block !important;
+}
+#_navList .channel-list .icon {
+  display: none;
+}
+#_navList .channel-list li {
+  width: 165px;
+  height: 62px;
+  font-size: 18px;
+  line-height: 65px;
+  border-radius: 2px;
+  position: relative;
+}
+#_navList .channel-list li .channel-icon {
+  width: 30px;
+  height: 50px;
+  display: inline-block;
+  margin-left: 40px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+#_navList .channel-list li img {
+  width: 100%;
+  top: 0px !important;
+}
+
+.channel-work-width {
+  width: 1090px;
+  margin: 0 auto;
+}
+.channel-work {
+  width: 870px;
+  margin: 0 auto 30px 0;
+  float: right;
 }
 .channel-work .card-section {
-  border: 1px solid;
+  -moz-box-shadow: 0px 0px 20px 5px #f7f7f7;
+  /* 老的 Firefox */
+  box-shadow: 0px 0px 20px 5px #f7f7f7;
   height: 490px;
   overflow: hidden;
 }
@@ -1194,45 +1056,226 @@ _activityList > div {
   margin: 10px;
 }
 
-.channel-nav {
-  width: 1080px;
+.common-footer {
+  background: #f4f4f6;
+  height: 160px;
+}
+.common-footer .footer {
+  width: 650px;
   margin: 0 auto;
-}
-.channel-nav .channel-list {
-  float: left;
-  width: 165px;
-  min-height: 760px;
-}
-.channel-nav .channel-list .selected {
-  background: #f9d160;
-}
-.channel-nav .channel-list li {
-  width: 165px;
-  height: 62px;
   font-size: 18px;
-  line-height: 65px;
-  border-radius: 2px;
+  height: 160px;
+}
+.common-footer .footer .tupppai-message {
+  margin-right: 40px;
+}
+.common-footer .footer .tupppai-top {
+  margin-top: 45px;
+}
+.common-footer .footer .tupppai-footer {
+  margin-top: 20px;
+}
+.common-footer .footer .app-section .wb {
+  width: 52px;
+  text-align: center;
+  margin-top: 40px;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 40px;
+}
+.common-footer .footer .app-section .wb .wb-icon {
+  background: url('/web/img/sina.png') no-repeat;
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  vertical-align: text-top;
+}
+.common-footer .footer .app-section .wx-user {
+  width: 56px;
+  text-align: center;
+  margin-top: 40px;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 40px;
+}
+.common-footer .footer .app-section .wx-user .wx-icon {
+  background: url('/web/img/wechat.png') no-repeat;
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  vertical-align: text-top;
+  background-position: 2px 0px;
+}
+.common-footer .footer .app-section .qq {
+  width: 52px;
+  text-align: center;
+  margin-top: 40px;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 40px;
+}
+.common-footer .footer .app-section .qq .qq-icon {
+  background: url('/web/img/wechat.png') no-repeat;
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  vertical-align: text-top;
+}
+
+.common-header {
+  height: 59px;
+  border-bottom: 5px solid #fafafa;
+  margin-bottom: 10px;
+}
+.common-header .header-section {
+  width: 1080px;
+  margin: 20px auto 0;
+  padding-bottom: 20px;
+}
+.common-header .header-section .logo {
+  float: left;
+  height: 60px;
+  line-height: 60px;
+}
+.common-header .header-section .logo img {
+  margin-top: 4px;
+}
+.common-header .header-section .header-nav {
+  float: left;
+  margin-left: 65px;
+  height: 55px;
+  font-size: 20px;
+}
+.common-header .header-section .header-nav .home-press {
+  border-bottom: 3px solid #f9d160;
+}
+.common-header .header-section .header-nav .home-press a {
+  color: #f9d160;
+}
+.common-header .header-section .header-nav .home-press .home-press-icon {
+  background: url('/web/img/home.png') no-repeat !important;
+  display: inline-block;
+  width: 22px;
+  height: 23px;
+  vertical-align: sub;
+}
+.common-header .header-section .header-nav .home-icon {
+  background: url('/web/img/home_gray.png') no-repeat;
+  display: inline-block;
+  width: 22px;
+  height: 23px;
+  vertical-align: sub;
+}
+.common-header .header-section .header-nav li {
+  width: 70px;
+  text-align: center;
+  height: 55px;
+  line-height: 68px;
+  color: #32303e;
+  float: left;
+  margin: 0 20px;
+}
+.common-header .header-section .register {
+  float: right;
+  width: 210px;
+  margin-right: -10px;
+}
+.common-header .header-section .register .login {
+  float: left;
+}
+.common-header .header-section .register .login .user-avatar:hover .avatar-nav {
+  display: inline-block !important;
+}
+.common-header .header-section .register .login .user-avatar {
+  float: left;
+  line-height: 15px;
+  margin-top: 15px;
+  margin-right: 40px;
+  border-radius: 3px;
+  margin-left: -40px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #fad263;
   position: relative;
 }
-.channel-nav .channel-list li .channel-icon {
-  width: 30px;
-  height: 40px;
-  display: inline-block;
-  margin-left: 40px;
-  margin-right: 10px;
+.common-header .header-section .register .login .user-avatar .avatar-nav {
+  position: absolute;
+  top: 47px;
+  left: -20px;
+  width: 160px;
+  height: 180px;
+  z-index: 9999;
+  display: none;
 }
-.channel-nav .channel-list li img {
+.common-header .header-section .register .login .user-avatar .avatar-nav li {
+  width: 160px;
+  height: 60px;
+  background: #fff;
+  border-bottom: 1px solid #eaeaec;
+  border-left: 1px solid #eaeaec;
+  border-right: 1px solid #eaeaec;
+  font-size: 16px;
+  line-height: 60px;
+  text-align: center;
+}
+.common-header .header-section .register .login .user-avatar .avatar-nav li i {
+  display: inline-block;
+  width: 22px;
+  height: 26px;
+  vertical-align: middle;
+}
+.common-header .header-section .register .login .user-avatar .avatar-nav li .home-icon {
+  background: url('/web/img/home_gray.png');
+  background-repeat: no-repeat;
+  background-position: 1px 0px;
+  margin-right: 5px;
+}
+.common-header .header-section .register .login .user-avatar .avatar-nav li .setting-icon {
+  background: url('/web/img/set.png');
+  background-repeat: no-repeat;
+  background-position: 1px 0px;
+  margin-right: 5px;
+}
+.common-header .header-section .register .login .user-avatar .avatar-nav li .exit-icon {
+  background: url('/web/img/home.png');
+  background-repeat: no-repeat;
+  background-position: 1px 0px;
+  margin-right: 5px;
+}
+.common-header .header-section .register .login .user-avatar img {
   width: 100%;
 }
-.channel-nav .channel-list li .triangle-icon {
-  background: url('/web/img/sanjiao.png') no-repeat;
+.common-header .header-section .register .login .information {
+  font-size: 14px;
+  float: left;
+  margin-top: 20px;
+  margin-right: 35px;
+}
+.common-header .header-section .register .login .information .information-icon {
+  background: url('/web/img/alarm.png') no-repeat;
   display: inline-block;
-  width: 15px;
-  height: 24px;
-  vertical-align: middle;
-  position: absolute;
-  right: -15px;
-  top: 20px;
+  width: 22px;
+  height: 23px;
+  vertical-align: text-top;
+}
+.common-header .header-section .register .register-btn {
+  float: left;
+  font-size: 14px;
+  color: #a0a0a0;
+  height: 60px;
+  line-height: 60px;
+}
+.common-header .header-section .register .register-icon {
+  background: url('/web/img/log_in.png') no-repeat;
+  display: inline-block;
+  width: 22px;
+  height: 23px;
+  vertical-align: text-top;
+}
+.common-header .header-section .register .ask-button {
+  float: right;
+  height: 40px;
+  margin-top: 8px;
 }
 
 .detail-ask {

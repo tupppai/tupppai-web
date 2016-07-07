@@ -8,6 +8,7 @@ define(['tpl!app/views/channel/header/header.html'],
             template: template,
 
             onShow: function() {
+                this.$('.imageLoad').imageLoad({scrop: true});
             },
 
         });
