@@ -1,12 +1,35 @@
-.channel-nav {
+#_navList {
 	width: 1080px;
 	margin: 0 auto;
 	.channel-list {
 	    float: left;
 		width: 165px;
 	    min-height: 760px;
+	    .channel-nav {
+
+	    }
 		.selected {
 		    background: #f9d160;
+			.triangle-icon {
+			    background: url('/web/img/sanjiao.png') no-repeat;
+			    display: inline-block;
+			    width: 15px;
+			    height: 24px;
+			    vertical-align: middle;
+			    position: absolute;
+			    right: -15px;
+			    top: 20px;
+			}
+			.grayscaled_icon  {
+				display: none !important;
+			}
+			.icon {
+				display: inline-block !important;
+			}
+		}
+
+		.icon {
+			display: none;
 		}
 		li {
 		    width: 165px;
@@ -17,23 +40,15 @@
 		    position: relative;
 			.channel-icon {
 			    width: 30px;
-			    height: 40px;
+			    height: 50px;
 			    display: inline-block;
 			    margin-left: 40px;
 			    margin-right: 10px;
+			    vertical-align: middle;
 			}
 			img {
 				width: 100%;
-			}
-			.triangle-icon {
-			    background: url('/web/img/sanjiao.png') no-repeat;
-			    display: inline-block;
-			    width: 15px;
-			    height: 24px;
-			    vertical-align: middle;
-			    position: absolute;
-			    right: -15px;
-			    top: 20px;
+			    top: 0px !important;
 			}
 		}
 	}
