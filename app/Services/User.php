@@ -645,6 +645,7 @@ class User extends ServiceBase
             'location'  => $user->location,
             'province'  => $user->province,
             'city'      => $user->city,
+            'discribe'  => $user->discribe,
             'bg_image'  => $user->bg_image,
             'badges_count'   => $counts['badges_count']
         );
@@ -680,6 +681,7 @@ class User extends ServiceBase
             'location'     => $location['location'],
             'province'     => $location['province'],
             'city'         => $location['city'],
+            'discribe'  => $user->discribe,
             'bg_image'     => $user->bg_image,
             'status'       => 1, //登陆成功
         );
