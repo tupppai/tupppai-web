@@ -5,6 +5,7 @@ use App\Services\ThreadCategory as sThreadCategory;
 use App\Services\Reply as sReply;
 use App\Services\Ask as sAsk;
 use App\Services\Category as sCategory;
+use App\Services\Download as sDownload;
 use App\Services\Thread as sThread;
 
 use App\Models\Reply as mReply;
@@ -59,6 +60,8 @@ class CategoryController extends ControllerBase{
             $thread = [];
             $thread['ask'] = sAsk::detail( sAsk::getAskById( $ask->id ) );
             $thread['replies'] = sReply::getRepliesByAskId($ask->id, 1, 3);
+            //进行中的用户
+            $thread['users']   = sDownload::getAskDownloadedUsers($ask->id, 0, 15) ;
             $threads[] = $thread;
         }
 

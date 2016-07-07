@@ -546,6 +546,10 @@ class VerifyController extends ControllerBase
         $category_ids = $this->post( 'category_id', 'string' );
         $status = $this->post( 'status', 'string' );
 
+        if( !$target_ids || !$target_type ){
+            return error('WRONG_ARGUMENTS', '请选择要操作的求助或作品');
+        }
+
         $uid = $this->_uid;
         foreach ($target_ids as $key => $target_id) {
             $target_type = $target_types[$key];
