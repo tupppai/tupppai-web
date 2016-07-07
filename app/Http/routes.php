@@ -213,6 +213,10 @@ case 'main':
             $app->get('user/replies/{uid}', 'UserController@replies');
             $app->get('user/threads', 'UserController@threads');
             $app->get('user/threads/{uid}', 'UserController@threads');
+
+			$app->get('users/{id}', 'UserController@view');
+            $app->get('user/{id}/asks', 'UserController@asks');
+            $app->get('user/{id}/replies', 'UserController@replies');
             $app->get('user/transactions', 'UserController@transactions');
 			#upload
 			$app->post('upload', 'ImageController@upload');
