@@ -409,5 +409,33 @@ class UserController extends ControllerBase {
         //return
         return $this->output( $userAndReplies );
     }
+
+    public function asks( $uid ){
+        $page = $this->get( 'page', 'int', 1 );
+        $size = $this->get( 'size', 'int', 15 );
+
+        $user_ask_ids = sAsk::getUserAskIds( $uid, $page, $size );
+        $asks = [];
+
+        foreach( $user_ask_ids as $user_ask_id ){
+            $asks[] = sAsk::detail( sAsk::getAskById( $user_ask_id ) );
+        }
+
+        return $this->output( $asks );
+    }
+
+    public function replies( $uid ){
+        $page = $this->get( 'page', 'int', 1 );
+        $size = $this->get( 'size', 'int', 15 );
+
+        $user_reply_ids = sReply::getUserReplyIds( $uid, $page, $size );
+        $replies = [];
+
+        foreach( $user_reply_ids as $user_reply_id ){
+            $replies[] = sReply::detail( sReply::getReplyById( $user_reply_id ) );
+        }
+
+        return $this->output( $replies );
+    }
 }
 ?>

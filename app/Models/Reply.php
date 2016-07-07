@@ -283,10 +283,16 @@ class Reply extends ModelBase
                     ->sum('click_count');
     }
 
-    public function get_reply_ids_by_uid( $uid ){
+    public function get_reply_ids_by_uid( $uid, $page = null, $size = null ){
         $builder = self::query_builder();
-        return $builder->where('uid', $uid)
-            ->lists('id');
+        $builder = $builder->where('uid', $uid);
+        if( $size ){
+            return $builder->forPage( $page, $size )
+                            ->lists('id');
+        }
+        else{
+            return $builder->lists('id');
+        }
     }
 
     public function count_users_by_reply_ids( $replyIds ){

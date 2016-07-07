@@ -61,10 +61,15 @@ class Ask extends ModelBase
         return self::query_page($builder, $page, $limit);
     }
 
-    public function get_ask_ids_by_uid( $uid ){
+    public function get_ask_ids_by_uid( $uid, $page = null, $size = null ){
         $builder = self::query_builder();
-        return $builder->where('uid', $uid)
-            ->lists('id');
+        $builder = $builder->where('uid', $uid);
+        if( $size ){
+            return $builder->lists('id');
+        }
+        else{
+            return $builder->forPage( $page, $size )->lists( 'id' );
+        }
     }
 
     public function get_hidden_ask_by_category_id($category_id) {

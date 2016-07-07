@@ -207,6 +207,8 @@ case 'main':
 			#user
 			$app->get('user', 'UserController@status');
 			$app->get('users/{id}', 'UserController@view');
+            $app->get('user/{id}/asks', 'UserController@asks');
+            $app->get('user/{id}/replies', 'UserController@replies');
             $app->get('user/transactions', 'UserController@transactions');
 			#upload
 			$app->post('upload', 'ImageController@upload');

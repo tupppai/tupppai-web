@@ -890,8 +890,8 @@ class Ask extends ServiceBase
         return $queue;
     }
 
-    public static function getUserAskIds( $uid ){
-        return (new mAsk)->get_ask_ids_by_uid( $uid );
+    public static function getUserAskIds( $uid, $page = null, $size = null ){
+        return (new mAsk)->get_ask_ids_by_uid( $uid, $page, $size );
     }
 
     public static function countUsersByAskIds( $askIds ){
