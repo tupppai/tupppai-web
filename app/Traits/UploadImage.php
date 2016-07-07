@@ -260,7 +260,7 @@ trait UploadImage
             default: break;
         }
 
-        $file = env('IMAGE_PREVIEW_DIR').'/tempImage.'.$ext;
+        $file = env('IMAGE_UPLOAD_DIR').'/temp/tempImage.'.$ext;
         //download
         self::_dl_file( $url, $file );
 
@@ -288,6 +288,9 @@ trait UploadImage
         $ret = CloudCDN::upload($file, $save_name);
 
         imagedestroy($im);
+        //delete temp file
+        @unlink( $file );
+
         //return image url
         return CloudCDN::file_url( $ret );
     }
