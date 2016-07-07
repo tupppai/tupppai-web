@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Main2;
 use App\Formats\Reply as fReply;
 use App\Services\Reply As sReply;
 use App\Services\Ask As sAsk;
+use App\Services\Comment As sComment;
 use App\Services\ThreadTag As sThreadTag;
+use App\Models\Comment as mComment;
 
 class ReplyController extends ControllerBase {
 
@@ -91,6 +93,12 @@ class ReplyController extends ControllerBase {
     public function view($reply_id) {
         $reply = sReply::getReplyById($reply_id);
         $reply = sReply::detail($reply);
+
+        if( !$reply ){
+            return error('REPLY_NOT_EXIST');
+        }
+        $reply['hot_comments'] = sComment::getHotComments(mComment::TYPE_REPLY, $reply['id']);
+        $reply['desc'] = strip_tags($reply['desc']);
 
         return $this->output( $reply );
     }

@@ -46,6 +46,11 @@
         public function view($id) {
             $ask = sAsk::getAskById($id);
             $ask = sAsk::detail($ask);
+            if( !$ask ){
+                return error('ASK_NOT_EXIST');
+            }
+            $ask['hot_comments'] = sComment::getHotComments(mComment::TYPE_ASK, $ask['id']);
+            $ask['desc'] = strip_tags($ask['desc']);
             cAskCounts::inc($id,'click');
 
             return $this->output($ask);
