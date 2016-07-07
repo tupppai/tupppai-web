@@ -227,6 +227,9 @@ case 'main':
             $app->get('channel/{id}/info', 'CategoryController@show');
             $app->get('channel/{id}/asks', 'CategoryController@asks');
             $app->get('channel/{id}/replies', 'CategoryController@replies');
+
+            $app->get('thread/hot', 'ThreadController@hot');
+            $app->get('thread/new', 'ThreadController@latest');
 		}
 		);
 		$app->get('/robots.txt', function () use ($hostname) {
