@@ -227,18 +227,6 @@ class Reply extends ServiceBase
         return (new mReply)->get_reply_ids_by_uid( $uid, $page, $size );
     }
 
-        // $builder = self::query_builder('r');
-        // $asks    = 'Psgod\Models\Ask';
-        // return $builder->where('r.status = '.self::STATUS_NORMAL.
-        //     " AND r.uid = ".$uid.
-        //     " AND r.create_time < ".$last_updated)
-        //     //->join($asks, "r.ask_id= r.id", "a", 'left')
-        //     //->columns('id, content, x, y, direction')
-        //     ->orderBy('r.create_time desc')
-        //     ->limit($limit, ($page-1)*$limit)
-        //     ->getQuery()
-        //     ->execute();
-
     /**
      * 通过id获取reply
      */
