@@ -9,19 +9,16 @@
     <meta media="screen and (max-width:640px)" http-equiv="cache-control" content="max-age=0" />
     <meta media="screen and (max-width:640px)" http-equiv="cache-control" content="no-cache" />
     <meta media="screen and (max-width:640px)" name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    
-    <link rel="icon" href="/img/favicon.ico" type="image/x-icon" /> 
-    <link rel="stylesheet" type="text/css" href="/css/common.css">
-    <link rel="stylesheet" type="text/css" media="screen and (min-width:640px)" href="/css/recommend.css">
-    <link rel="stylesheet" type="text/css" media="screen and (max-width:640px)" href="/css/recommendh5.css">
+
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
     <!--[if IE]>
-         <script src="scripts/lib/mediaqueries/css3-mediaqueries.js" ></script>
-         <script src="scripts/lib/PIE/PIE.js" ></script>
+         <script src="/main/res/lib/mediaqueries/css3-mediaqueries.js" ></script>
+         <script src="/main/res/lib/PIE/PIE.js" ></script>
     <![endif]-->
     <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
     <script src="../../../lib/pageresponse/pageResponse.js"></script>
     <title>图派介绍</title>
-</head> 
+</head>
 <body>
   <div class="recommend-container">
       <div class="recommend-section">
@@ -36,7 +33,7 @@
                 </span>
                 <span class="download-btn">
                     <a href="https://itunes.apple.com/cn/app/tu-pai-yu-zhou-di-yi-kuan/id1056871759?mt=8"><img src="/img/recommend/apple.png" alt=""></a>
-                    
+
                     <a target="_black" href="http://android.myapp.com/myapp/detail.htm?apkName=com.psgod">
                       <img class="Android" src="/img/recommend/Android.png" alt="">
                     </a>
@@ -90,13 +87,13 @@
                          <!-- <img src="/img/recommend/wechat_code.jpg"> -->
                        </div>
                 </div>
-            
+
                  <div class="contact-up">
                      <span class="app-intro">地址：深圳市南山区华中科技大学深圳产学研基地</span>
                      <span>反馈QQ：2974252463</span>
                      <span>反馈微信：2202411857</span>
                      <span>用户QQ群：511828428</span>
-                     <span>意见反馈邮箱：i@tupppai.com</span>  
+                     <span>意见反馈邮箱：i@tupppai.com</span>
                  </div>
               </div>
           </div>
@@ -113,11 +110,11 @@ $(function(){
     if($(window).width() < 640) {
        pageResponse({
             selectors: '.recommend-section',     //模块的类名，使用class来控制页面上的模块(1个或多个)
-            mode : 'auto',     // auto || contain || cover 
+            mode : 'auto',     // auto || contain || cover
             width : '800',      //输入页面的宽度，只支持输入数值，默认宽度为320px
             height : '1300'      //输入页面的高度，只支持输入数值，默认高度为504px
-        })       
+        })
     }
-    
+
 })
 </script>
