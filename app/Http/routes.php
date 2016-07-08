@@ -206,15 +206,19 @@ case 'main':
 			$app->put('love', 'LikeController@love');
 			#user
 			$app->get('user', 'UserController@status');
-			$app->get('users/{id}', 'UserController@view');
-            $app->get('user/{id}/asks', 'UserController@asks');
-            $app->get('user/{id}/replies', 'UserController@replies');
+			$app->get('users/{uid}', 'UserController@view');
+            $app->get('user/asks', 'UserController@asks');
+            $app->get('user/asks/{uid}', 'UserController@asks');
+            $app->get('user/replies', 'UserController@replies');
+            $app->get('user/replies/{uid}', 'UserController@replies');
+            $app->get('user/threads', 'UserController@threads');
+            $app->get('user/threads/{uid}', 'UserController@threads');
             $app->get('user/transactions', 'UserController@transactions');
 			#upload
 			$app->post('upload', 'ImageController@upload');
 
             #tag
-            $app->get( 'tags', 'TagController@getTags');
+            $app->get( 'tags', 'TagController@getTags'); //404!
             $app->get( 'bannerAndTags', 'ThreadController@getBannerAndTags');
 
             $app->get( 'recommendUser', 'UserController@recommendUser' );
