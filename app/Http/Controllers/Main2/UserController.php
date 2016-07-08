@@ -411,7 +411,7 @@ class UserController extends ControllerBase {
         return $this->output( $userAndReplies );
     }
 
-    public function asks( $uid = null ){
+    public function asks( $id = null ){
         if( !$uid ){
             $uid = $this->_uid;
         }
@@ -431,7 +431,7 @@ class UserController extends ControllerBase {
         return $this->output( $asks );
     }
 
-    public function replies( $uid = null ){
+    public function replies( $id = null ){
         if( !$uid ){
             $uid = $this->_uid;
         }
@@ -451,7 +451,7 @@ class UserController extends ControllerBase {
         return $this->output( $replies );
     }
 
-    public function threads( $uid = null ){
+    public function threads( $id = null ){
         if( !$uid ){
             $uid = $this->_uid;
         }

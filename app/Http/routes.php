@@ -206,13 +206,13 @@ case 'main':
 			$app->put('love', 'LikeController@love');
 			#user
 			$app->get('user', 'UserController@status');
-			$app->get('users/{uid}', 'UserController@view');
+			$app->get('users/{id}', 'UserController@view');
             $app->get('user/asks', 'UserController@asks');
-            $app->get('user/asks/{uid}', 'UserController@asks');
+            $app->get('user/asks/{id}', 'UserController@asks');
             $app->get('user/replies', 'UserController@replies');
-            $app->get('user/replies/{uid}', 'UserController@replies');
+            $app->get('user/replies/{id}', 'UserController@replies');
             $app->get('user/threads', 'UserController@threads');
-            $app->get('user/threads/{uid}', 'UserController@threads');
+            $app->get('user/threads/{id}', 'UserController@threads');
 
 			$app->get('users/{id}', 'UserController@view');
             $app->get('user/{id}/asks', 'UserController@asks');
