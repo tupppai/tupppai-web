@@ -86,4 +86,34 @@ class Thread extends ServiceBase
             return $asks->count() + $replies->count();
         }
     }
+
+    public static function getUserThreads( $uid, $page, $size ){
+        $asks = DB::table('asks')
+            ->where( 'uid', $uid )
+            ->selectRaw('id as target_id, '. mAsk::TYPE_ASK.' as target_type, update_time, create_time')
+            ->where('status','>', mAsk::STATUS_DELETED );
+        $replys = DB::table('replies')
+            ->where( 'uid', $uid )
+            ->selectRaw('id as target_id, '. mAsk::TYPE_REPLY.' as target_type, update_time, create_time')
+            ->where('status','>', mReply::STATUS_DELETED );
+
+        $askAndReplies = $replys->union($asks)
+            ->orderBy('create_time', 'DESC')
+            ->forPage( $page, $size )
+            ->get();
+
+        $threads = [];
+        foreach( $askAndReplies as $askOrReply ){
+            $thread = [];
+            if( $askOrReply->target_type == mAsk::TYPE_ASK ){
+                $thread = sAsk::detail( sAsk::getAskById( $askOrReply->target_id ) );
+            }
+            else if ( $askOrReply->target_type == mReply::TYPE_REPLY ){
+                $thread = sReply::detail( sReply::getReplyById( $askOrReply->target_id ) );
+            }
+            $threads[] = $thread;
+        }
+
+        return $threads;
+    }
 }
