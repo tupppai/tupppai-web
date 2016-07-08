@@ -2835,7 +2835,7 @@ ul {
   cursor: pointer;
 }
 .reminder {
-  background: url(../img/frame.png);
+  background: url(../../img/frame.png);
   width: 170px;
   height: 41px;
   background-repeat: no-repeat;
