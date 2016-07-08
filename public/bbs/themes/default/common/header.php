@@ -34,7 +34,7 @@
                 <a href="#register-popup" class="register-popup"><li class="register">注册</li></a>
             </div>
             <ul>
-                 <li class="tupai"><a target="_blank" href="/res/app/statics/recommend/recommend.html">图派介绍</a></li>
+                 <li class="tupai"><a target="_blank" href="/main/res/app/statics/recommend/recommend.html">图派介绍</a></li>
             <li class="app-tupai">客户端<span class="download-picture"></span></li>
                 
                 
