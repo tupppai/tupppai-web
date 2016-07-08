@@ -7,7 +7,7 @@ use \App\Models\UserRole as mUserRole,
 use \App\Services\UserScheduling as sUserScheduling;
 use App\Services\ActionLog as sActionLog;
 use App\Services\Role as sRole;
-
+use App\Services\Parttime\Task as spTask;
 class UserRole extends ServiceBase
 {
 
@@ -194,6 +194,9 @@ class UserRole extends ServiceBase
         sActionLog::init( 'ASSIGN_ROLE' );
         $pers = $mUserRole->assign_roles( $uid, $role_ids );
         sActionLog::save( $pers );
+        if( in_array( mUserRole::ROLE_HELP, $role_ids ) ){
+            spTask::assign();
+        }
         return $pers;
     }
 

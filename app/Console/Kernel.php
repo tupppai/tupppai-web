@@ -41,8 +41,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         //
-        $schedule->command('inspire')
-                 ->hourly();
+        // $schedule->command('inspire')
+        //          ->hourly();
 
         // 每天推荐3名用户到首页
         $today_key = config('redis_keys.today_recommend_users');

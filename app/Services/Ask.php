@@ -823,15 +823,11 @@ class Ask extends ServiceBase
     {
         $queue=[];
         //过滤被以图片不合理的理由拒绝的asks
-        $impossibles = mAssignment::where('status', mAssignment::ASSIGNMENT_STATUS_REFUSE)
+        $impossibleIds = mAssignment::where('status', mAssignment::ASSIGNMENT_STATUS_REFUSE)
             ->where('refuse_type', mAssignment::ASSIGNMENT_REFUSE_TYPE_USER)
             ->where('reason_type', mAssignment::ASSIGNMENT_REASON_TYPE_IMPOSSIBLE)
-            ->select('ask_id')
-            ->get();
-        $impossibleIds = [];
-        foreach ($impossibles as $impossible) {
-            $impossibleIds[] = $impossible->ask_id;
-        }
+            ->lists('ask_id');
+
         //挑出0回复
         $asks=mAsk::whereNotExists(function($query){
                 $query->select(DB::raw('ask_id'))
@@ -861,18 +857,24 @@ class Ask extends ServiceBase
             $allAsks[]=$ask->toArray();
         }
         $uidList = array_column($allAsks, 'count', 'uid');
-        foreach ($queue as &$data) {
+        $history = mAssignment::where('status', mAssignment::ASSIGNMENT_STATUS_REFUSE)
+                        ->select(['ask_id', 'refuse_type', 'reason_type'])
+                        ->get();
+        $ask_priorities = [];
+        foreach ($history as $his) {
             $priority = 0;
-            //计算退出任务产生的需求值
-            $history = mAssignment::where('status', mAssignment::ASSIGNMENT_STATUS_REFUSE)->get();
-            foreach ($history as $his) {
-                if ($his->refuse_type == 1) {
-                    $priority += 50; //长期无人响应任务：增加需求值（可配置，先拍脑袋为＋50）
-                }
-                if ($his->refuse_type == 2 && $his->reason_type == 2) {
-                    $priority += 50; //设计师能力不足p不来（可配置，先拍脑袋为＋50）
-                }
+            if ($his->refuse_type == 1) {
+                $priority += 50; //长期无人响应任务：增加需求值（可配置，先拍脑袋为＋50）
             }
+            else if ($his->refuse_type == 2 && $his->reason_type == 2) {
+                $priority += 50; //设计师能力不足p不来（可配置，先拍脑袋为＋50）
+            }
+            $ask_priorities[$his->ask_id] = $priority;
+        }
+
+        foreach ($queue as &$data) {
+            $priority = isset($ask_priorities[$data['id']]) ? $ask_priorities[$data['id']] : 0;
+            //计算退出任务产生的需求值
             $create_still = $now_time-$data['create_time'];
             $create_still /= $maxStill;//以天为单位
             $priority += 1000*(1/(1+exp(-$create_still)) - 0.5);
@@ -890,8 +892,8 @@ class Ask extends ServiceBase
         return $queue;
     }
 
-    public static function getUserAskIds( $uid ){
-        return (new mAsk)->get_ask_ids_by_uid( $uid );
+    public static function getUserAskIds( $uid, $page = null, $size = null ){
+        return (new mAsk)->get_ask_ids_by_uid( $uid, $page, $size );
     }
 
     public static function countUsersByAskIds( $askIds ){

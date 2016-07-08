@@ -8,6 +8,7 @@ use App\Services\Follow as sFollow;
 use App\Services\Count as sCount;
 use App\Services\Message as sMessage;
 use App\Services\Reply as sReply;
+use App\Services\Thread as sThread;
 use App\Services\UserLanding as sUserLanding;
 
 use App\Counters\UserCounts as cUserCounts;
@@ -408,6 +409,61 @@ class UserController extends ControllerBase {
         }
         //return
         return $this->output( $userAndReplies );
+    }
+
+    public function asks( $uid = null ){
+        if( !$uid ){
+            $uid = $this->_uid;
+        }
+        else{
+            $this->isLogin();
+        }
+        $page = $this->get( 'page', 'int', 1 );
+        $size = $this->get( 'size', 'int', 15 );
+
+        $user_ask_ids = sAsk::getUserAskIds( $uid, $page, $size );
+        $asks = [];
+
+        foreach( $user_ask_ids as $user_ask_id ){
+            $asks[] = sAsk::detail( sAsk::getAskById( $user_ask_id ) );
+        }
+
+        return $this->output( $asks );
+    }
+
+    public function replies( $uid = null ){
+        if( !$uid ){
+            $uid = $this->_uid;
+        }
+        else{
+            $this->isLogin();
+        }
+        $page = $this->get( 'page', 'int', 1 );
+        $size = $this->get( 'size', 'int', 15 );
+
+        $user_reply_ids = sReply::getUserReplyIds( $uid, $page, $size );
+        $replies = [];
+
+        foreach( $user_reply_ids as $user_reply_id ){
+            $replies[] = sReply::detail( sReply::getReplyById( $user_reply_id ) );
+        }
+
+        return $this->output( $replies );
+    }
+
+    public function threads( $uid = null ){
+        if( !$uid ){
+            $uid = $this->_uid;
+        }
+        else{
+            $this->isLogin();
+        }
+        $page = $this->get( 'page', 'int', 1 );
+        $size = $this->get( 'size', 'int', 15 );
+
+        $threads = sThread::getUserThreads( $uid, $page, $size );
+
+        return $this->output( $threads );
     }
 }
 ?>
