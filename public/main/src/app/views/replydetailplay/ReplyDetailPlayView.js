@@ -1,7 +1,7 @@
 define([
         'app/views/Base',
         'app/models/Base',
-        'app/models/Ask', 
+        'app/models/Ask',
         'app/models/Reply',
         'app/collections/Comments',
         'tpl!app/templates/replydetailplay/ReplyDetailPlayView.html',
@@ -12,7 +12,7 @@ define([
        ],
     function (View, ModelBase, Ask, Reply, Comments, template, ReplyDetailPersonView, ReplyDetailCommentView, ReplyDetailCountView, ReplyDetailActionView) {
         "use strict";
-        
+
         return View.extend({
             tagName: 'div',
             className: '',
@@ -35,7 +35,7 @@ define([
             },
             onRender:function() {
                 //页面打开默认点击
-    
+
                 var reply_id = $(".header-container").attr("data-reply-id");
                 $('.center-loading-image-container[data-id=' + reply_id + ']').trigger("click");
             },
@@ -45,7 +45,7 @@ define([
             addEmoji: function() {
                 $('.icon-add-emoji').emojiSelector({
                     assign: 'textInp',
-                    path: '/res/lib/face-selector/face/'
+                    path: '/main/res/lib/face-selector/face/'
                 });
             },
             sendComment: function(e) {
@@ -66,7 +66,7 @@ define([
                         //todo: upgrade append
                         $("#textInp").val(' ');
                         var t = $(document);
-                        // t.scrollTop(t.height());  
+                        // t.scrollTop(t.height());
                     }
                     else {
                         $(".login-popup").click();
@@ -81,14 +81,14 @@ define([
                 var current_play_id     = $(e.currentTarget).parents(".reply-ifo").siblings(".inp-frame").find(".play-inp").attr('name');
                 $(current_play_icon).emojiSelector({
                     assign: current_play_id,
-                    path: '/res/lib/face-selector/face/'
+                    path: '/main/res/lib/face-selector/face/'
                 });
             },
             picScroll: function(e) {
                 var replyImg = $(".pic-scroll img");  //获取img
                 var replyLength = replyImg.length; //获取img长度
                 var replyIndex = parseInt($(".detail-pic").attr("otherNum")); //获取索引值
-                // var dataIdx = parseInt($(e.currentTarget).attr("data-idx"));    //  
+                // var dataIdx = parseInt($(e.currentTarget).attr("data-idx"));    //
                 var replySrc = null;
                 var picIndex = null;
                 if(e.currentTarget.id == "replyDetailRight") {
@@ -104,10 +104,10 @@ define([
                         replyIndex = 0;
                     };
                     $(".detail-pic").attr("otherNum", replyIndex);
-                };  
+                };
 
                  // 点击作品
-                if($(e.currentTarget).hasClass("center-loading-image-container")) {     
+                if($(e.currentTarget).hasClass("center-loading-image-container")) {
                     replyIndex = $(e.currentTarget).index();
                     $(".detail-pic").attr("otherNum", replyIndex);
                 };
@@ -176,19 +176,19 @@ define([
                 var view = new ReplyDetailPersonView({
                     model: model
                 });
-                replyDetailPersonView.show(view); 
+                replyDetailPersonView.show(view);
 
                 var userIfo = new Backbone.Marionette.Region({el:"#userIfo"});
                 var view = new ReplyDetailCommentView({
                     collection: comments
                 });
-                userIfo.show(view); 
+                userIfo.show(view);
 
                 var count = new Backbone.Marionette.Region({el:"#count"});
                 var view = new ReplyDetailCountView({
                     model: model
                 });
-                count.show(view); 
+                count.show(view);
 
                 var action = new Backbone.Marionette.Region({el:"#action"});
                 var view = new ReplyDetailActionView({
@@ -222,7 +222,7 @@ define([
 
                     // 图片长比较长，按照高度缩放，截取中间部分
                     if (imageWidth / imageHeight >= containerWidth / containerHeight) {
-                      
+
                         tempWidth = containerWidth;
                         tempHeight = imageHeight * containerWidth / imageWidth;
 
@@ -235,7 +235,7 @@ define([
 
                         offsetTop = 0;
                         offsetLeft  = (containerWidth - tempWidth) / 2;
-                    };    
+                    };
                 } else if (imageWidth < containerWidth && imageHeight < containerHeight) {
                     // 图片宽高都小于容器宽高
                     if (imageRatio > containerWidth / containerHeight) {
@@ -252,7 +252,7 @@ define([
                         offsetLeft   = (containerWidth - tempWidth) / 2;
                     }
                 } else if (imageWidth <= containerWidth && imageHeight >= containerHeight) {
-                    // 图片宽度小于容器 高度大于容器  
+                    // 图片宽度小于容器 高度大于容器
                     tempHeight = containerHeight;
                     tempWidth  = imageWidth * containerHeight / imageHeight;
 
@@ -265,14 +265,14 @@ define([
 
                     offsetTop  = (containerHeight - tempHeight) / 2;
                     offsetLeft = 0;
-                };          
+                };
                 $("#bigPic").css('left', offsetLeft);
                 $("#bigPic").css('top', offsetTop);
                 $("#bigPic").width(tempWidth);
-                $("#bigPic").height(tempHeight);   
+                $("#bigPic").height(tempHeight);
                 $(".other-icon").css('left', offsetLeft);
                 $(".other-icon").css('top', offsetTop + 20);
-            
+
                 setTimeout(function() {
                     $(".comment-content .border-bottom").removeClass("border-bot");
                     $(".border-bottom").eq($(".comment-content").find(".border-bottom").length - 1).addClass("border-bot");
