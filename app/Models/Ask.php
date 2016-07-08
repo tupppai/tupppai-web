@@ -64,7 +64,7 @@ class Ask extends ModelBase
     public function get_ask_ids_by_uid( $uid, $page = null, $size = null ){
         $builder = self::query_builder();
         $builder = $builder->where('uid', $uid);
-        if( $size ){
+        if( !$size ){
             return $builder->lists('id');
         }
         else{
