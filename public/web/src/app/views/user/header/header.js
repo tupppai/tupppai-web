@@ -6,9 +6,16 @@ define(['tpl!app/views/user/header/header.html'],
             tagName: 'div',
             className: '',
             template: template,
-
-            onShow: function() {
+            events:{
+                'click .nav': 'fnHeaderNav'
             },
+            onShow: function() {
+                this.$('.imageLoad').imageLoad({scrop: true});
+            },
+            fnHeaderNav: function(e) {
+                $('.nav').removeClass('select');
+                $(e.currentTarget).addClass('select');
+            }
 
         });
     });

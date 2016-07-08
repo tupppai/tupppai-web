@@ -1,0 +1,36 @@
+		<div class="work-card">
+			<div class="create-time">
+				<%= create_time %>
+			</div>
+			<div class="content">
+				<%= desc %>
+			</div>
+			<div class="work-img">
+				<i class="ask-icon">原图</i>
+				<img class="imageLoad" data-original="<%= avatar %>" alt="">
+			</div>
+			<div class="btn-gather clearfix">
+				<div class="comment-show">
+					<i class="comment-icon"></i>
+					<span class="comment-count"><%= comment_count %></span>
+				</div>
+				<div class="like-show">
+					<i class="like-icon"></i>
+					<span class="like-count"><%= like_count %></span>
+				</div>
+			</div>
+			<div class="work-image-show">
+			<% _.each(ask_uploads, function(ask){ %>
+				<div class="work-image">
+					<img class="imageLoad" data-original="<%= ask.image_url %>" alt="">
+				</div>
+			<% }) %>
+			</div>
+			<div class="channer clearfix">
+				<div class="work-count"><%= reply_count %> 作品</div>
+				<div class="edit-right">
+					<i class="edit-icon"></i>
+					<span class="edit-btn">编辑</span>
+				</div>
+			</div>
+		</div>

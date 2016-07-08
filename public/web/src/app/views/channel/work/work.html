@@ -4,9 +4,11 @@
 		<div class="work-list clearfix">
 			<div class="ask-card">
 				<div class="header">
-					<span class="avatar">
-						<img class="imageLoad" data-original="<%= ask.avatar %>" alt="">
-					</span>
+					<a href="#user/their/<%= ask.uid %>">
+						<span class="avatar">
+							<img class="imageLoad" data-original="<%= ask.avatar %>" alt="">
+						</span>
+					</a>
 					<span class="user-name">
 						<%= ask.nickname %>
 					</span>
@@ -14,9 +16,11 @@
 						原图
 					</div>
 				</div>
-				<div class="card-img">
-					<img class="imageLoad" data-original="<%= ask.image_url %>" alt="">
-				</div>
+				<a href="#detail/ask/<%= ask.id %>">
+					<div class="card-img">
+						<img class="imageLoad" data-original="<%= ask.image_url %>" alt="">
+					</div>
+				</a>
 				<div class="foot">
 					<div class="work-count">
 						已有作品:<%= ask.reply_count %>
@@ -30,16 +34,20 @@
 		<% _.each(replies, function(reply){ %>
 			<div class="work-card">
 				<div class="header">
-					<span class="avatar">
-						<img class="imageLoad" data-original="<%= reply.avatar %>" alt="">
-					</span>
+					<a href="#user/their/<%= reply.uid %>">
+						<span class="avatar">
+							<img class="imageLoad" data-original="<%= reply.avatar %>" alt="">
+						</span>
+					</a>
 					<span class="user-name">
 						名字
 					</span>
 				</div>
-				<div class="card-img">
-					<img class="imageLoad" data-original="<%= reply.image_url %>" alt="">
-				</div>
+				<a href="#detail/detail/<%= reply.id %>">
+					<div class="card-img">
+						<img class="imageLoad" data-original="<%= reply.image_url %>" alt="">
+					</div>
+				</a>
 				<div class="foot">
 					<div class="button">
 						<div class="comment">
@@ -67,9 +75,13 @@
 					<i class="progress-icon"></i>
 					进行中:
 				</div>
-				<div class="progress-avatar">
-					<img class="imageLoad" data-original="http://7u2spr.com1.z0.glb.clouddn.com/20160519-165412573d7f3443ec6.jpg" alt="">
-				</div>
+				<% _.each(users, function(user){ %>
+					<a href="#user/their/<%= user.uid %>">
+						<div class="progress-avatar">
+							<img class="imageLoad" data-original="<%= user.avatar %>" alt="">
+						</div>
+					</a>
+					<% }) %>
 			</div>
 		</div>
 	</div>
