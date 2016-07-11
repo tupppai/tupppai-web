@@ -177,7 +177,8 @@ case 'main':
 			$app->get('populars', 'ThreadController@popular');
 
 			$app->post('asks/save', 'AskController@save');
-			$app->get('asks/{id}', 'AskController@view');
+            $app->get('asks/{id}', 'AskController@view');
+			$app->get('ask/{id}/replies', 'AskController@replies');
 			$app->get('timeline', 'ThreadController@timeline');
 			//个人中心 求P
 			$app->get('asks', 'AskController@index');

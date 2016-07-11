@@ -136,5 +136,16 @@
             sAsk::upAsk($id, $status);
             return $this->output();
         }
+
+        public function replies( $ask_id ){
+            $page = $this->get('page', 'int');
+            $size = $this->get('size', 'int');
+
+            $cond = ['ask_id'=>$ask_id];
+
+            $replies= sReply::getRepliesV2( $cond, $page, $size );
+            return $this->output($replies);
+        }
+
     }
 ?>
