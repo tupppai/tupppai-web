@@ -5,7 +5,7 @@ include THEMEPATH.'../res/app/templates/register/RegisterView.html';
 ?>
 </div>
 
-<link rel="stylesheet" type="text/css" href="/main/res/libs/fancybox/jquery.fancybox.css" >
+<link rel="stylesheet" type="text/css" href="/main/res/lib/fancybox/jquery.fancybox.css" >
 <script src="/main/res/lib/fancybox/jquery.fancybox.js"></script>
 <script src="/main/res/lib/common.js"></script>
 <script>
