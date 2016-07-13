@@ -87,13 +87,14 @@ class HookController extends ControllerBase{
 						//留言 评论
 				        $comment = sComment::addNewComment($trade->uid, $commentHead.$trade->attach->comment, $trade->attach->target_type, $trade->attach->target_id);
                         $guest = sUser::getUserByUid( $trade->uid );
+                        $author = sUser::getUserByUid( $author_uid );
                         $authorUserLanding = sUserLanding::getUserLandingByUid( $author_uid, mUserLanding::TYPE_WEIXIN_MP );
                         if( $authorUserLanding ){
                             // 打赏成功发送微信模板消息
                             $tplVars = [
                                 'first'=>'禀告大神：小热粉“Carina'.$author->username.'”给您进贡了'.$amount.'元，赶紧戳这里临幸一下他吧~',
                                 'keyword1' => number_format($amount/100,2).'元',
-                                'keyword2' => date('Y-m-d', $trade->trade_finish_time),
+                                'keyword2' => $trade->trade_finish_time,
                                 'keyword3' => '图派打赏',
                                 'keyword4' => $trade->attach->comment,
                                 'remark' => '贡品已打到您的图派账户，请到图派个人主页查看小金库吧~~被赞，评论，分享作品，打赏等都会增加您作品的曝光度，帮你上13区（热门），接受更多人的膜拜哦~~'
