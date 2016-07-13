@@ -10,6 +10,7 @@ return [
         'DEFAULT_SCALE' => 0
     ],
     'TRANS_UNIT' => ' 单位', // TRANSACTION_UNIT
+    'CURRENCY_UNIT' => ' 元',
     'pc' => [],
     'admin' => [],
     'reward_amount_scope_start' => 0,

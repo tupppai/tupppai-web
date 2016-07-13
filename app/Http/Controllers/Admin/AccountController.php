@@ -43,9 +43,11 @@
 
 	        $cond = [];
 	        $cond['uid'] = $uid;
+	        $order = $this->post('sort', 'string', 'id DESC');
 
-			$data  = $this->page($account, $cond, array(), ['id DESC']);
-			$unit = config('global.TRANS_UNIT');
+			$data  = $this->page($account, $cond, array(), [$order]);
+			$unit = config('global.CURRENCY_UNIT');
+			$amount_base = config('global.MULTIPLIER');
 
 			foreach( $data['data'] as $row ){
 				$user = sUser::detail( sUser::getUserByUid( $row->uid ) );
@@ -79,8 +81,8 @@
 						break;
 				}
 
-				$row->trans_balance = number_format( $row->balance, 2 ).$unit;
-				$row->trans_amount = number_format( $row->amount, 2 ).$unit;
+				$row->trans_balance = number_format( $row->balance/$amount_base, 2 ).$unit;
+				$row->trans_amount = number_format( $row->amount/$amount_base, 2 ).$unit;
 			}
 			return $this->output_table( $data );
 		}

@@ -30,6 +30,7 @@
                 { data: "trans_amount", name:"交易金额"},
                 { data: "trans_balance", name:"余额"},
                 { data: "type", name:"交易类型"},
+                { data: "created_at", name:"交易时间"},
                 { data: "memo", name: "备注"},
                 { data: "status", name:"交易状态"}
             ],
