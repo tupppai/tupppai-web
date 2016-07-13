@@ -92,7 +92,7 @@ class HookController extends ControllerBase{
                         if( $authorUserLanding ){
                             // 打赏成功发送微信模板消息
                             $tplVars = [
-                                'first'=>'禀告大神：小热粉“'.$author->username.'”给您进贡了'.$amount.'元，赶紧戳这里临幸一下他吧~',
+                                'first'=>'禀告大神：小热粉“'.$author->username.'”给您进贡了'.number_format($amount/100,2).'元，赶紧戳这里临幸一下他吧~',
                                 'keyword1' => number_format($amount/100,2).'元',
                                 'keyword2' => $trade->trade_finish_time,
                                 'keyword3' => '图派打赏',
