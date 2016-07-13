@@ -10,7 +10,12 @@
     <div class="form-group">
         <input name="uid" class="form-filter form-control" placeholder="账号ID">
     </div>
+
+    <div class="form-group">
+        <button type="submit" class="form-filter form-control" id="search" >搜索</button>
+    </div>
 </div>
+
 <table class="table table-bordered table-hover" id="list_account_transactions"></table>
 
 <script type="text/javascript">
