@@ -38,6 +38,7 @@ jQuery(document).ready(function() {
     table.init({
         src: $("#check_ajax"),
         dataTable: {
+            "ordering": false,
             "columns": [
                 { data: "id", name: "任务ID" },
                 { data: "author", name: "兼职用户昵称" },
