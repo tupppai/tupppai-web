@@ -80,8 +80,11 @@ class ImageController extends ControllerBase
 
         foreach($files as $file) {
             //$size = $file->getSize();
-
-            $size = getimagesize($file->getPathName());
+            $filename = $file->getPathName();
+            if( !$filename ){
+                continue;
+            }
+            $size = getimagesize( $filename );
             $ratio= $size[1]/$size[0];
             $scale= 1;
             $size = $size[1]*$size[0];
