@@ -12,7 +12,9 @@ define(['tpl!app/views/common/header/header.html'],
                 "click .ask-button" : 'fnBinding',
                 "click .header-nav li" : 'fnPress',
                 "click #exit-out" : "fnExitOut",
-                "click .login-btn" : 'fnLoginPopup'
+                "click .login-btn" : 'fnLoginPopup',
+                "click .login-btn" : 'fnLoginPopup',
+                "click .logo" : "fnUpdate"
             },
             onShow: function() {
               $("a#Binding-popup").fancybox({
@@ -23,7 +25,7 @@ define(['tpl!app/views/common/header/header.html'],
                     var username = $('.fancybox-inner .phone-number input').val();
                     var password = $('.fancybox-inner .password input').val();
                     var url = '/user/login'
-                    $.post( url,{
+                    $.post( url ,{
                         username: username ,
                         password: password
                     } ,function(data){
@@ -97,6 +99,16 @@ define(['tpl!app/views/common/header/header.html'],
                             location.reload();
                     });
               })
+            },
+            fnUpdate: function() {
+                $("a[href=#update-popup]").attr('id','update-popup');
+
+                $("a#update-popup").fancybox({
+                        'padding': 0,
+                    });
+                $("a#update-popup").click();
+                $("a#update-popup").removeAttr('id');
+
             },
             fnExitOut:function() {
                 $.get('/user/logout',{},function(){

@@ -1,33 +1,27 @@
-<div class="user-work clearfix">
-	<div class="user-width">
-		<div class="work-content clearfix">
-			<div class="work-card">
-				<div class="create-time">
-					2016-15-03
-				</div>
-				<div class="content">
-					作品回答内容
-				</div>
-				<div class="work-img">
-					<img class="imageLoad" data-original="<%= 'avatar' %>" alt="">
-				</div>
-				<div class="btn-gather clearfix">
-					<div class="comment-show">
-						<i class="comment-icon"></i>
-						<span class="comment-count">66</span>
-					</div>
-					<div class="like-show">
-						<i class="like-icon"></i>
-						<span class="like-count">123</span>
-					</div>
-				</div>
-				<div class="channer clearfix">
-					<i class="channer-icon"></i>
-					<span class="channer-content">频道内容</span>
-					<span class="channer-content">频道内容</span>
-					<span class="channer-content">频道内容</span>
-				</div>
+	<div class="work-card">
+		<div class="create-time">
+			<%= create_time %>
+		</div>
+		<div class="content">
+			<%= desc %>
+		</div>
+		<div class="work-img">
+			<img class="imageLoad" data-original="<%= image_url %>" alt="">
+		</div>
+		<div class="btn-gather clearfix">
+			<div class="comment-show">
+				<i class="comment-icon"></i>
+				<span class="comment-count"><%= comment_count %></span>
+			</div>
+			<div class="like-show">
+				<i class="like-icon"></i>
+				<span class="like-count"><%= like_count %></span>
 			</div>
 		</div>
-	<div>
-</div>
+		<div class="channer clearfix">
+			<i class="channer-icon"></i>
+			<span class="channer-content">频道内容</span>
+			<span class="channer-content">频道内容</span>
+			<span class="channer-content">频道内容</span>
+		</div>
+	</div>

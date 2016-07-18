@@ -13,8 +13,13 @@ define(['tpl!app/views/user/header/header.html'],
                 this.$('.imageLoad').imageLoad({scrop: true});
             },
             fnHeaderNav: function(e) {
+                var _this = $(e.currentTarget);
                 $('.nav').removeClass('select');
-                $(e.currentTarget).addClass('select');
+                _this.addClass('select');
+                var type = _this.attr('data-type');
+
+                this.trigger('click:nav',type);
+
             }
 
         });

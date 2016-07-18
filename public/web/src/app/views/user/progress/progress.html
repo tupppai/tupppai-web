@@ -1,0 +1,35 @@
+<div class="user-progress">
+	<div class="right-ask-image">
+		<img src="<%= image_url %>" alt="">
+	</div>
+	<div class="left-ask-message">
+		<div class="header">
+			<div class="avatar">
+				<img src="<%= avatar %>" alt="">
+			</div>
+			<div class="nickname">
+				<%= nickname %>
+			</div>
+			<div class="create-time">
+				<%= create_time %>
+			</div>
+		</div>
+		<div class="desc">
+			<%= desc %>
+		</div>
+		<div class="footer">
+			<div class="delete-btn">
+				<i class="delete-icon"></i>
+				删除
+			</div>
+			<div class="update-btn">
+				<i class="update-icon"></i>
+				上传作品
+			</div>
+			<div class="download-btn" data-askId="<%= ask_id %>">
+				<i class="download-icon"></i>
+				下载原图
+			</div>
+		</div>
+	</div>
+</div>

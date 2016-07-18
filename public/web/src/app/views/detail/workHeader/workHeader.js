@@ -1,4 +1,4 @@
-define(['tpl!app/views/detail/work/work.html'],
+define(['tpl!app/views/detail/workHeader/workHeader.html'],
     function (template) {
         "use strict";
 
@@ -8,7 +8,6 @@ define(['tpl!app/views/detail/work/work.html'],
             template: template,
 
             onShow: function() {
-                this.$('.imageLoad').imageLoad({scrop: true});
             },
 
         });
