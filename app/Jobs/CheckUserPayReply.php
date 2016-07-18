@@ -51,13 +51,14 @@ class CheckUserPayReply extends Job
             else {
                 $uid = tUser::SYSTEM_USER_ID;
             }
+            if( $amount > 0 ){
+                DB::connection('db_trade')->transaction(function () use ($reply_uid, $orderInfo, $amount ,$uid) {
+                    //生成订单 传入卖家ID
+                    tOrder::writeLog($uid, $reply_uid, $amount, $orderInfo);
 
-            DB::connection('db_trade')->transaction(function () use ($reply_uid, $orderInfo, $amount ,$uid) {
-                //生成订单 传入卖家ID
-                tOrder::writeLog($uid, $reply_uid, $amount, $orderInfo);
-
-                tUser::addBalance($reply_uid, $amount, '作品收入'); //支付订单
-            });
+                    tUser::addBalance($reply_uid, $amount, '作品收入'); //支付订单
+                });
+            }
         } catch (\Exception $e) {
             Log::error('CheckUserPayReply', array($e->getLine().'------'.$e->getMessage()));
         }

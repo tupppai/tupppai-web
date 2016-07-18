@@ -30,6 +30,10 @@ case 'admin':
             'middleware' => ['auth','before','after','log', 'query']
         ], function ($app) {
             router($app);
+            //防止以admin去访问pc的接口
+            $app->get('/', function(){
+                return redirect('http://'.env('MAIN_HOST'));
+            });
         }
     );
     $app->get('/robots.txt', function() use ($hostname){

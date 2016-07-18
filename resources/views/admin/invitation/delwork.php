@@ -56,11 +56,9 @@ jQuery(document).ready(function() {
                 { data: "weixin_share_count", name:"朋友圈内"},
                 // { data: "total_share", name: "分享好友" },
                 { data: "click_count", name: "浏览数"},
-                { data: "reply_count", name: "作品数"},
                 { data: "up_count", name: "点赞"},
                 { data: "inform_count", name: "举报数"},
                 { data: "comment_count", name: "评论数"},
-                { data: "download_times", name: "下载数"},
                /*
                 { data: "oper", name: "P按钮"},
                 { data: "uid", name:"创建时间"},*/

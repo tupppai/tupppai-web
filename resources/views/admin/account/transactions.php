@@ -10,7 +10,12 @@
     <div class="form-group">
         <input name="uid" class="form-filter form-control" placeholder="账号ID">
     </div>
+
+    <div class="form-group">
+        <button type="submit" class="form-filter form-control" id="search" >搜索</button>
+    </div>
 </div>
+
 <table class="table table-bordered table-hover" id="list_account_transactions"></table>
 
 <script type="text/javascript">
@@ -25,6 +30,7 @@
                 { data: "trans_amount", name:"交易金额"},
                 { data: "trans_balance", name:"余额"},
                 { data: "type", name:"交易类型"},
+                { data: "created_at", name:"交易时间"},
                 { data: "memo", name: "备注"},
                 { data: "status", name:"交易状态"}
             ],

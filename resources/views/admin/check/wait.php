@@ -45,6 +45,7 @@ jQuery(document).ready(function() {
         dom: "<t><'row'<'col-md-5 col-sm-12'li><'col-md-7 col-sm-12'p>>",
         src: $("#check_ajax"),
         dataTable: {
+            "ordering": false,
             "columns": [
                 { data: "id", name: "ID" },
                 { data: "oper", name: "操作"},

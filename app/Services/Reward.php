@@ -72,16 +72,16 @@ class Reward extends ServiceBase
                 }
                 //记录打赏
                 $reward = (new mReward)->create_reward($send_uid, $target_type, $target_id, $amount, $status);
-                    if( $status > mReward::STATUS_DELETED ){
-                        if( $target_type == mReward::TYPE_ASK ){
-                            cAskCounts::inc($target_id, 'reward');
-                        }
-                        else if( $target_type == mReward::TYPE_REPLY ){
-                            cReplyCounts::inc($target_id, 'reward');
-                        }
+                if( $status > mReward::STATUS_DELETED ){
+                    if( $target_type == mReward::TYPE_ASK ){
+                        cAskCounts::inc($target_id, 'reward');
                     }
-                //支付
-                tUser::pay($send_uid, $recv_uid, $amount, $reason);
+                    else if( $target_type == mReward::TYPE_REPLY ){
+                        cReplyCounts::inc($target_id, 'reward');
+                    }
+                }
+                // //支付
+                // tUser::pay($send_uid, $recv_uid, $amount, $reason);
             });
         // }catch(\Exception $e){
         //     return error('REWARD_EXIST', $e->getMessage());
