@@ -6,7 +6,7 @@ define([
 
     return window.app.list.extend({
         tagName: 'div',
-        className: 'container',
+        className: 'container detail-work',
         headerView: workHeader,
         childView: work,
         childEvents: {

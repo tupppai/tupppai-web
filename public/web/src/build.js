@@ -33,6 +33,7 @@
         swiper: 'lib/swiper/swiper',
         fastclick: 'lib/fastclick/fastclick',
         masonry: 'lib/masonry/masonry',
+        uploadify: 'lib/uploadify/jquery.uploadify.min',
         asyncList: 'lib/component/asyncList',
         imageLazyLoad: 'lib/imagesloaded/imageLazyLoad',
         waterfall: 'lib/component/waterfall',
@@ -65,6 +66,10 @@
         swiper: {
             depts: ['zepto'],
             exports: 'swiper'
+        },
+        uploadify: {
+            deps: ['jquery'],
+            exports: 'uploadify'
         },
         fastclick: {
             depts: ['zepto'],

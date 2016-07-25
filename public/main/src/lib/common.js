@@ -1,5 +1,5 @@
 /**
- * JSON   
+ * JSON
  */
 $.JSON = {};
 var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
@@ -109,7 +109,7 @@ var Common = function() {
             var url_hash = "";
             //if(opt.url) url_hash = $.time33(0<=opt.url.indexOf('?')? opt.url.substr(0, opt.url.indexOf('?')) : opt.url);
             url_hash = $.time33(opt.url);
-            
+
             //加载Loading图片
             if (typeof opt.loading === 'undefined' || opt.loading == true) $('body').append(loadingDiv);
 
@@ -162,7 +162,7 @@ var Common = function() {
             });
         };
     };
-    
+
     var upload = function(upload_id, callback, start_callback, options) {
         setTimeout(function(){
             $(upload_id).uploadify({
@@ -181,6 +181,7 @@ var Common = function() {
                 'auto': true,
                 'multi': false,
                 'onUploadSuccess': function (file, data, response) {
+                    debugger;
                     callback && callback($.JSON.parse(data), upload_id);
                 },
                 'onUploadProgress' : function(file, bytesUploaded, bytesTotal, totalBytesUploaded, totalBytesTotal) {
@@ -219,7 +220,7 @@ function trimUrl(url) {
 
 	var pos = url.indexOf('?');
 	if(pos != -1) {
-		url = url.substring(0, pos);//获取参数部分 
+		url = url.substring(0, pos);//获取参数部分
 	}
 	return url;
 }
@@ -240,7 +241,7 @@ function time( timeMatrixing ){
     var second = Math.ceil((now - t)/1000);
     var str = '';
     var s = 0;
-    if( second < 60 ){ 
+    if( second < 60 ){
         s = Math.ceil(second);
         str = '刚刚';
     }
@@ -248,7 +249,7 @@ function time( timeMatrixing ){
         s = Math.ceil(second/60);
         str = s+'分钟前';
     }
-    else if( second < (60*60*24) ){ 
+    else if( second < (60*60*24) ){
         s = Math.ceil(second/(60*60));
         str = s+'小时前';
     }
@@ -306,7 +307,7 @@ function append(el, item, options) {
 function error(title, desc, callback) {
     $("a#show-error-popup").fancybox({
         afterShow: function(){
-            $('.confirm, .cancel').click(function(){ 
+            $('.confirm, .cancel').click(function(){
                 $.fancybox.close();
                 callback && callback();
             });
@@ -336,7 +337,7 @@ function toast(desc, callback) {
     }, 2000);
 };
 
-function parse(resp, xhr) { 
+function parse(resp, xhr) {
     // todo  billqiang QQ
       // QC.Login({
       //       btnId:"qqLoginBtn",   //插入按钮的节点id
@@ -362,7 +363,7 @@ function parse(resp, xhr) {
         });
     }
 
-    if(resp.ret == 0 && resp.code == 1 && this.url != 'user/status') { 
+    if(resp.ret == 0 && resp.code == 1 && this.url != 'user/status') {
         if(WB2.oauthData.access_token) {
             //微博注册
             $(".binding-popup").click();
@@ -372,7 +373,7 @@ function parse(resp, xhr) {
             $(".login-popup").click();
         }
         return false;
-    } 
+    }
     else if(resp.ret == 0 && this.url != 'user/status') {
         error('操作失败', resp.info);
     }
@@ -383,7 +384,7 @@ function parse(resp, xhr) {
 var account = {
     keypress:function(e) {
         if(e.which == 13) {
-           $("#login_btn").click(); 
+           $("#login_btn").click();
         }
     },
     weibo_auth: function(e) {
@@ -436,7 +437,7 @@ var account = {
         var password = $('#login_password').val();
 
         $.post('/user/login', {
-            username: username, 
+            username: username,
             password: password
         }, function(returnData, data) {
             if( returnData.ret == 1 ) {
@@ -469,7 +470,7 @@ var account = {
             var nickname = $('#register_nickname').val();
             var phone    =  $('#register_phone').val();
             var password = $('#register_password').val();
-    
+
             var url = "/user/register";
             var postData = {
                 'nickname': nickname,

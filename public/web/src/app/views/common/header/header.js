@@ -1,5 +1,5 @@
-define(['tpl!app/views/common/header/header.html'],
-    function (template) {
+define(['uploadify', 'tpl!app/views/common/header/header.html'],
+    function (uploadify, template) {
         "use strict";
 
         return window.app.view.extend({
@@ -17,10 +17,28 @@ define(['tpl!app/views/common/header/header.html'],
                 "click .logo" : "fnUpdate"
             },
             onShow: function() {
+                var self = this;
+                Common.upload("#upload_picture-reply", function(data){
+                    $("#updateImage").attr('src',data.data.url);
+                }, null, {
+                     url: '/upload'
+                });
               $("a#Binding-popup").fancybox({
                     'padding': 0
                 });
+              $('#set_work').click(function() {
+                    var src = $('#updateImage').attr('src');
+                    var desc = $('desc_content').text();
+                    var upload_id = $('#set_work').attr('data-upload-id');
+                    $.post('/v2/replies/save',{
+                        upload_id: upload_id,
+                        desc: desc,
+                        tasgs: tasgs,
+                    },function(){
 
+                    })
+
+              })
               $('.login-button').click(function(){
                     var username = $('.fancybox-inner .phone-number input').val();
                     var password = $('.fancybox-inner .password input').val();
@@ -99,6 +117,57 @@ define(['tpl!app/views/common/header/header.html'],
                             location.reload();
                     });
               })
+            },
+            upload: function(e) {
+                debugger;
+                var upload_id = $("#upload_picture-reply").attr("upload-id");
+                var ask_id    = $('#reply-uploading-popup').attr("ask-id");
+                var desc      = $("#reply-uploading-popup .reply-content").val();
+                var category_id = $('#reply-uploading-popup').attr("data-id");
+                var task = $('body').attr('data-task');
+                var id = $('body').attr('data-id');
+
+                if( !desc) {
+                    error('提示','内容不能为空');
+                    return false;
+                }
+                if( !upload_id ) {
+                    error('上传作品','请上传作品');
+                    return false;
+                }
+                if( task == 'task') {
+                    var url = '/task/upload/'+id;
+                } else {
+                    var url = '/replies/save';
+                }
+                    $.post(url, {
+                        ask_id: ask_id,
+                        upload_id: upload_id,
+                        category_id: category_id,
+                        desc: desc,
+                    }, function(data) {
+                        $.fancybox.close();
+                            // if(category_id) {
+                            //     location.href = '/#channel/'+ category_id ;
+                            //     location.reload();
+                            // } else {
+                            //     location.href = '/#channel/reply';
+                            //     location.reload();
+                            // }
+
+                            $('.title-bar').removeClass("hide");
+                            $('.header-back').removeClass("height-reduce");
+                            $(".reply-index").addClass("active").siblings().removeClass("active");
+                             toast('上传成功',function(){
+                            // location.reload();
+                        });
+                    });
+                    var src = "http://7u2spr.com1.z0.glb.clouddn.com/20151205-154952566297205441e.png";
+                $(".upload-middle").removeClass("opacity");
+                $(".show-picture").attr("src", src);
+                $("#upload_picture-reply").attr("upload-id", '');
+                $("#reply-uploading-popup").attr("ask-id", '');
+                $(".upload-accomplish").parent().parent().find(".reply-content").val('');
             },
             fnUpdate: function() {
                 $("a[href=#update-popup]").attr('id','update-popup');

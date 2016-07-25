@@ -125,7 +125,8 @@ select {
   *font-size: 100%;
   resize: none;
 }
-.clearfix:after {
+.clearfix:after,
+#_workList:after {
   content: "\200B";
   display: block;
   height: 0;
@@ -486,6 +487,136 @@ input::-webkit-input-placeholder {
   background: url('/web/img/wechat_s.png') no-repeat;
   background-position: 5px 7px;
   margin-right: 15px;
+}
+#content-section {
+  width: 1100px;
+  margin: 0 auto;
+}
+#upload_picture-reply {
+  position: absolute;
+  top: 0px;
+  width: 235px !important;
+  height: 235px !important;
+  line-height: 235px;
+}
+#upload_picture-reply #SWFUpload_0 {
+  width: 100%;
+  left: 0px;
+  height: 100%;
+}
+#upload_picture-reply #upload_picture-reply-button {
+  display: none;
+}
+.update-popup {
+  width: 680px;
+}
+.update-popup .update-content-left {
+  width: 415px;
+  display: inline-block;
+  vertical-align: top;
+  height: 550px;
+}
+.update-popup .update-content-left .footer-content {
+  position: relative;
+}
+.update-popup .update-content-left .footer-content .update-btn {
+  width: 110px;
+  height: 35px;
+  font-size: 14px;
+  background: #f9d160;
+  border-radius: 20px;
+  line-height: 35px;
+  color: #fff;
+  text-align: center;
+  float: right;
+  margin-right: 20px;
+}
+.update-popup .update-content-left .textarea-content {
+  position: relative;
+}
+.update-popup .update-content-left .textarea-content .emoji-icon {
+  position: absolute;
+  bottom: 10px;
+  left: 0px;
+  margin-left: 15px;
+  display: inline-block;
+  width: 30px;
+  height: 40px;
+  vertical-align: middle;
+  background: url('/web/img/emoji.png') no-repeat;
+  background-position: 5px 7px;
+  margin-right: 15px;
+}
+.update-popup .update-content-left .textarea-content textarea {
+  padding: 50px 20px 20px;
+  font-size: 16px;
+  width: 90%;
+  height: 210px;
+  border-bottom: 1px solid #ebebeb;
+}
+.update-popup .update-reply-right {
+  display: inline-block;
+  width: 265px;
+}
+.update-popup .update-reply-right .header {
+  height: 20px;
+  line-height: 20px;
+  font-size: 14px;
+  padding-left: 10px;
+  border-left: 5px solid #f9d160;
+  margin-left: 15px;
+  margin-top: 10px;
+  font-weight: 500;
+  color: #32303d;
+}
+.update-popup .update-reply-right .update-image {
+  width: 235px;
+  height: 235px;
+  line-height: 235px;
+  text-align: center;
+  margin: 15px;
+  overflow: hidden;
+  position: relative;
+}
+.update-popup .update-reply-right .update-image .update-image-update {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+.update-popup .update-reply-right .update-image img {
+  width: 100%;
+}
+.update-popup .update-reply-right .update-icon {
+  background: url('/web/img/phot.png') no-repeat;
+  display: inline-block;
+  width: 45px;
+  height: 35px;
+  vertical-align: sub;
+}
+.update-popup .update-reply-right .footer {
+  position: relative;
+  height: 235px;
+  width: 235px;
+  overflow: hidden;
+  margin: 15px;
+}
+.update-popup .update-reply-right .footer .ask-icon {
+  display: inline-block;
+  width: 35px;
+  height: 25px;
+  vertical-align: sub;
+  background: #f9d160;
+  border-radius: 20px 0px 0px 20px;
+  font-size: 12px;
+  line-height: 25px;
+  padding-left: 15px;
+  color: #fff;
+  position: absolute;
+  top: 10px;
+  right: 0px;
+}
+.update-popup .update-reply-right .footer img {
+  width: 100%;
 }
 
 .activity-header {
@@ -1302,7 +1433,7 @@ _activityList > div {
   margin-right: 5px;
 }
 .detail-ask .ask-section .work-content {
-  margin-top: 25px;
+  margin-top: 10px;
   border: 1px solid #d6d5da;
 }
 .detail-ask .ask-section .work-content .work-card {
@@ -1357,6 +1488,10 @@ _activityList > div {
   font-size: 16px;
   line-height: 35px;
   padding-left: 10px;
+}
+.detail-ask .ask-section .work-content .work-card .work-img {
+  overflow: hidden;
+  height: 367px;
 }
 .detail-ask .ask-section .work-content .work-card .work-img img {
   width: 100%;
@@ -1452,30 +1587,15 @@ _activityList > div {
 }
 
 .detail-work {
-  width: 560px;
-  margin: auto;
-  margin-right: 10px;
+  float: right;
+  margin-bottom: 50px;
 }
 .detail-work .ask-section {
   width: 447px;
   height: 50px;
 }
-.detail-work .ask-section .nav {
-  font-size: 18px;
-  background: #f5f5f5;
-}
-.detail-work .ask-section .nav .kuso-icon {
-  margin-left: 10px;
-  display: inline-block;
-  width: 30px;
-  height: 40px;
-  vertical-align: middle;
-  background: url('/web/img/p.png') no-repeat;
-  background-position: 5px 7px;
-  margin-right: 5px;
-}
 .detail-work .ask-section .work-content {
-  margin-top: 10px;
+  margin-bottom: 50px;
   border: 1px solid #d6d5da;
 }
 .detail-work .ask-section .work-content .work-card {
@@ -1488,7 +1608,7 @@ _activityList > div {
 }
 .detail-work .ask-section .work-content .work-card .header .user-message {
   float: left;
-  width: 70px;
+  width: 200px;
   height: 60px;
 }
 .detail-work .ask-section .work-content .work-card .header .avatar {
@@ -1530,6 +1650,9 @@ _activityList > div {
   font-size: 16px;
   line-height: 35px;
   padding-left: 10px;
+}
+.detail-work .ask-section .work-content .work-card .work-img {
+  height: 600px;
 }
 .detail-work .ask-section .work-content .work-card .work-img img {
   width: 100%;
@@ -1674,6 +1797,26 @@ _activityList > div {
   font-size: 16px;
   padding: 5px;
   margin-top: 0px;
+}
+
+.detail-workHeader .ask-section {
+  float: right;
+  width: 447px;
+  height: 50px;
+}
+.detail-workHeader .ask-section .nav {
+  font-size: 18px;
+  background: #f5f5f5;
+}
+.detail-workHeader .ask-section .nav .kuso-icon {
+  margin-left: 10px;
+  display: inline-block;
+  width: 30px;
+  height: 40px;
+  vertical-align: middle;
+  background: url('/web/img/p.png') no-repeat;
+  background-position: 5px 7px;
+  margin-right: 5px;
 }
 
 .index-banner {
@@ -2439,6 +2582,128 @@ _activityList > div {
   vertical-align: top;
 }
 
+#_askList {
+  background: #f5f5f5;
+  padding-top: 20px;
+  min-height: 900px;
+}
+#_askList .user-width {
+  width: 1010px;
+  margin: 0 auto 0;
+}
+#_askList .user-width .work-card {
+  width: 275px;
+  float: left;
+  border: 1px solid #d6d5da;
+  background: #fff;
+  margin: 0 29px;
+}
+#_askList .user-width .work-card .create-time {
+  color: #e0e0e0;
+  font-size: 13px;
+  height: 40px;
+  line-height: 40px;
+  margin-left: 10px;
+}
+#_askList .user-width .work-card .content {
+  height: 35px;
+  font-size: 16px;
+  line-height: 35px;
+  padding-left: 10px;
+}
+#_askList .user-width .work-card .work-img {
+  padding: 0 10px;
+  position: relative;
+}
+#_askList .user-width .work-card .work-img .ask-icon {
+  z-index: 999;
+  background: #f9d160;
+  font-size: 12px;
+  border-radius: 0px 37px 41px 0px;
+  position: absolute;
+  bottom: 0px;
+  left: 10px;
+  width: 35px;
+  height: 25px;
+  color: #fff;
+  padding-left: 5px;
+  line-height: 25px;
+}
+#_askList .user-width .work-card .work-img img {
+  width: 100%;
+}
+#_askList .user-width .work-card .work-image-show {
+  background: #f5f5f5;
+  overflow: hidden;
+}
+#_askList .user-width .work-card .work-image-show .work-image {
+  width: 90px;
+  height: 90px;
+  overflow: hidden;
+  margin: 10px;
+  display: inline-block;
+}
+#_askList .user-width .work-card .work-image-show .work-image img {
+  width: 100%;
+}
+#_askList .user-width .work-card .btn-gather {
+  height: 40px;
+  line-height: 32px;
+}
+#_askList .user-width .work-card .btn-gather i {
+  display: inline-block;
+  width: 25px;
+  height: 18px;
+  vertical-align: middle;
+}
+#_askList .user-width .work-card .btn-gather .comment-show {
+  float: left;
+  margin: 0 20px 0 10px;
+}
+#_askList .user-width .work-card .btn-gather .comment-show .comment-icon {
+  background: url('/web/img/comment.png') no-repeat;
+  background-position: 3px 4px;
+}
+#_askList .user-width .work-card .btn-gather .comment-show .comment-count {
+  text-align: center;
+  color: #cccccc;
+  font-size: 14px;
+}
+#_askList .user-width .work-card .btn-gather .like-show {
+  float: left;
+}
+#_askList .user-width .work-card .btn-gather .like-show .like-icon {
+  background: url('/web/img/like_gray.png') no-repeat;
+  background-position: 3px 4px;
+}
+#_askList .user-width .work-card .btn-gather .like-show .like-count {
+  text-align: center;
+  color: #cccccc;
+  font-size: 14px;
+}
+#_askList .user-width .work-card .channer {
+  font-size: 14px;
+  color: #bdbcc2;
+  height: 45px;
+  line-height: 45px;
+}
+#_askList .user-width .work-card .channer .work-count {
+  float: left;
+  margin-left: 10px;
+}
+#_askList .user-width .work-card .channer .edit-right {
+  float: right;
+  margin-right: 10px;
+}
+#_askList .user-width .work-card .channer .edit-icon {
+  background: url('/web/img/like_gray.png') no-repeat;
+  display: inline-block;
+  width: 22px;
+  height: 23px;
+  vertical-align: middle;
+  background-position: 3px 4px;
+}
+
 .user-header .header {
   width: 940px;
   margin: 0 auto;
@@ -2517,6 +2782,10 @@ _activityList > div {
   margin-top: 40px;
   margin: 40px 30px 0;
 }
+.user-header .header .header-nav .select {
+  color: #f9d160;
+  border-bottom: 3px solid #f9d160;
+}
 .user-header .header .header-nav .setting {
   font-size: 18px;
   float: right;
@@ -2531,82 +2800,178 @@ _activityList > div {
   background-position: 1px 0px;
 }
 
-.user-work {
+.user-progress {
+  width: 955px;
+  height: 255px;
+  background: #fff;
+  margin-bottom: 20px;
+}
+.user-progress .right-ask-image {
+  width: 235px;
+  height: 235px;
+  overflow: hidden;
+  display: inline-block;
+  line-height: 235px;
+  border-right: 1px solid #e9e9e9;
+  padding: 10px;
+  vertical-align: top;
+}
+.user-progress .right-ask-image img {
+  width: 100%;
+  vertical-align: middle;
+}
+.user-progress .left-ask-message {
+  display: inline-block;
+  width: 690px;
+}
+.user-progress .left-ask-message .header {
+  height: 60px;
+  line-height: 60px;
+}
+.user-progress .left-ask-message .header .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  line-height: 40px;
+  display: inline-block;
+  padding: 10px;
+}
+.user-progress .left-ask-message .header .avatar img {
+  width: 100%;
+}
+.user-progress .left-ask-message .nickname {
+  display: inline-block;
+  font-size: 18px;
+  vertical-align: top;
+}
+.user-progress .left-ask-message .create-time {
+  float: right;
+  font-size: 16px;
+  color: #e9e9e9;
+}
+.user-progress .desc {
+  font-size: 18px;
+  padding: 10px;
+  height: 120px;
+}
+.user-progress .footer {
+  height: 55px;
+  line-height: 55px;
+  font-size: 16px;
+  color: #e9e9e9;
+}
+.user-progress .footer .download-btn {
+  float: right;
+}
+.user-progress .footer .download-btn .download-icon {
+  background: url('/web/img/download.png') no-repeat;
+  display: inline-block;
+  width: 22px;
+  height: 23px;
+  vertical-align: middle;
+  background-position: 4px 4px;
+}
+.user-progress .footer .update-btn {
+  float: right;
+  margin-left: 50px;
+}
+.user-progress .footer .update-btn .update-icon {
+  background: url('/web/img/upload.png') no-repeat;
+  display: inline-block;
+  width: 22px;
+  height: 23px;
+  vertical-align: middle;
+  background-position: 4px 4px;
+}
+.user-progress .footer .delete-btn {
+  float: right;
+  margin-left: 50px;
+}
+.user-progress .footer .delete-btn .delete-icon {
+  background: url('/web/img/delete.png') no-repeat;
+  display: inline-block;
+  width: 22px;
+  height: 23px;
+  vertical-align: middle;
+  background-position: 4px 4px;
+}
+
+#_askList {
   background: #f5f5f5;
   padding-top: 20px;
   min-height: 900px;
 }
-.user-work .user-width {
+#_askList .user-width {
   width: 1010px;
   margin: 0 auto 0;
 }
-.user-work .user-width .work-content .work-card {
+#_askList .user-width .work-card {
   width: 275px;
   float: left;
   border: 1px solid #d6d5da;
   background: #fff;
   margin: 0 29px;
 }
-.user-work .user-width .work-content .work-card .create-time {
+#_askList .user-width .work-card .create-time {
   color: #e0e0e0;
   font-size: 13px;
   height: 40px;
   line-height: 40px;
   margin-left: 10px;
 }
-.user-work .user-width .work-content .work-card .content {
+#_askList .user-width .work-card .content {
   height: 35px;
   font-size: 16px;
   line-height: 35px;
   padding-left: 10px;
 }
-.user-work .user-width .work-content .work-card .work-img {
+#_askList .user-width .work-card .work-img {
   padding: 0 10px;
 }
-.user-work .user-width .work-content .work-card .work-img img {
+#_askList .user-width .work-card .work-img img {
   width: 100%;
 }
-.user-work .user-width .work-content .work-card .btn-gather {
+#_askList .user-width .work-card .btn-gather {
   height: 40px;
   line-height: 32px;
 }
-.user-work .user-width .work-content .work-card .btn-gather i {
+#_askList .user-width .work-card .btn-gather i {
   display: inline-block;
   width: 25px;
   height: 18px;
   vertical-align: middle;
 }
-.user-work .user-width .work-content .work-card .btn-gather .comment-show {
+#_askList .user-width .work-card .btn-gather .comment-show {
   float: left;
   margin: 0 20px 0 10px;
 }
-.user-work .user-width .work-content .work-card .btn-gather .comment-show .comment-icon {
+#_askList .user-width .work-card .btn-gather .comment-show .comment-icon {
   background: url('/web/img/comment.png') no-repeat;
   background-position: 3px 4px;
 }
-.user-work .user-width .work-content .work-card .btn-gather .comment-show .comment-count {
+#_askList .user-width .work-card .btn-gather .comment-show .comment-count {
   text-align: center;
   color: #cccccc;
   font-size: 14px;
 }
-.user-work .user-width .work-content .work-card .btn-gather .like-show {
+#_askList .user-width .work-card .btn-gather .like-show {
   float: left;
 }
-.user-work .user-width .work-content .work-card .btn-gather .like-show .like-icon {
+#_askList .user-width .work-card .btn-gather .like-show .like-icon {
   background: url('/web/img/like_gray.png') no-repeat;
   background-position: 3px 4px;
 }
-.user-work .user-width .work-content .work-card .btn-gather .like-show .like-count {
+#_askList .user-width .work-card .btn-gather .like-show .like-count {
   text-align: center;
   color: #cccccc;
   font-size: 14px;
 }
-.user-work .user-width .work-content .work-card .channer {
+#_askList .user-width .work-card .channer {
   background: #f5f5f5;
   height: 40px;
   line-height: 32px;
 }
-.user-work .user-width .work-content .work-card .channer .channer-icon {
+#_askList .user-width .work-card .channer .channer-icon {
   background: url('/web/img/tag.png') no-repeat;
   display: inline-block;
   width: 22px;
@@ -2615,7 +2980,7 @@ _activityList > div {
   margin-left: 10px;
   background-position: 0px 3px;
 }
-.user-work .user-width .work-content .work-card .channer .channer-content {
+#_askList .user-width .work-card .channer .channer-content {
   font-size: 14px;
   color: #c5c5c5;
   margin-right: 16px;

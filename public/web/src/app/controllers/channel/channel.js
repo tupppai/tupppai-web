@@ -7,7 +7,7 @@ define([
 	function (navList, header,askList, workList) {
     "use strict";
     return function() {
-        var sections = ['_navList','_header','_askList', '_workList'];
+        var sections = ['_navList','_header','_askLista', '_workList'];
         var layoutView = window.app.render(sections);
 
         var channelNav = new window.app.collection();
@@ -31,7 +31,7 @@ define([
         var askListView = new askList({
             collection: askApi
         });
-        // window.app.show(layoutView._askList, askListView);
+        // window.app.show(layoutView._askLista, askListView);
 
         var channelWork = new window.app.collection();
         channelWork.url = "/v2/channel/0/replies";

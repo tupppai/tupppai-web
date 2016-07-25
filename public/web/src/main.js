@@ -12,6 +12,7 @@ require.config({
         fancybox: 'lib/fancybox/jquery.fancybox',
         masonry: 'lib/masonry/masonry',
         asyncList: 'lib/component/asyncList',
+        uploadify: 'lib/uploadify/jquery.uploadify.min',
         imageLazyLoad: 'lib/imagesloaded/imageLazyLoad',
         jquery: 'lib/jquery/jquery-1.9.0',
         grid: 'lib/grid/jquery.grid-a-licious.min',
@@ -40,6 +41,10 @@ require.config({
         common: {
             deps: ['jquery'],
             exports: 'common'
+        },
+        uploadify: {
+            deps: ['jquery'],
+            exports: 'uploadify'
         },
         lazyload: {
             depts: ['jquery'],

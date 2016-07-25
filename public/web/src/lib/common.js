@@ -386,3 +386,64 @@ function fntoast(title,hide) {
     },2000)
 };
 
+
+/**
+ * Common script to handle the theme demo
+ */
+var Common = function() {
+    var upload = function(upload_id, callback, start_callback, options) {
+        setTimeout(function(){
+            $(upload_id).uploadify({
+                'formData'     : {
+                    'timestamp' : new Date().getTime(),
+                    'token'     : new Date().getTime()
+                },
+                'method'    : 'post',
+                'buttonText': '<button class="btn btn-primary">选择文件</button>',
+                'swf'      : '/theme/vendors/uploadify/uploadify.swf',
+                'uploader' : options && options.url ? options.url : '/image/preview',
+                'queueID': 'fileQueue',
+                'width' : options && options.width ? options.width: '80',
+                'buttonImage' : '',
+                //'buttonImage' : ''options && options.button_image ? options.button_image : '/img/upphoto.png',
+                'auto': true,
+                'multi': false,
+                'onUploadSuccess': function (file, data, response) {
+
+                    // debugger;
+                    // $("#updateImage").attr('src',data);
+                    // $("#updateImage").attr('src',data.data);
+                    var data = JSON.parse(data);
+                    $("#updateImage").attr('src',data.data.url);
+                    $("#updateImage").removeClass("none");
+
+                },
+                'onUploadProgress' : function(file, bytesUploaded, bytesTotal, totalBytesUploaded, totalBytesTotal) {
+                    var progress_bar = $(".pace-inactive");
+                    if(progress_bar.length > 0){
+                        if(bytesUploaded == 0){
+                            progress_bar.find(".pace-progress").css("width", "100%");
+                        }
+                        else {
+                            progress_bar.hide();
+                        }
+                    }
+                },
+                'onUploadStart': function(data){
+
+                    var progress_bar = $(".pace-inactive");
+                    progress_bar.find(".pace-progress").css("width", 0);
+                    progress_bar.show();
+                    start_callback && start_callback (data);
+                }
+            });
+        },10);
+    };
+    return {
+        upload: upload,
+        //main function to the common tools
+        init: function() {
+        }
+    };
+}();
+Common.init();

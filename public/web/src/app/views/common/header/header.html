@@ -67,8 +67,12 @@
 								上传作品
 							</div>
 							<div class="update-image">
-								<!-- <i class="update-icon"></i> -->
-								<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160704-202424577a55788e8aa.png?imageView2/2/w/480" alt="">
+								<i class="update-icon"></i>
+		                        <input id="upload_picture-reply" type="file" accept="image/gif, image/jpeg" class="" >
+		                        <input type="hidden" name="show-picture">
+		                        <div class="update-image-update">
+									<img class="none update-image-work" id="updateImage" src="http://7u2spr.com1.z0.glb.clouddn.com/20160704-202424577a55788e8aa.png?imageView2/2/w/480" alt="">
+								</div>
 							</div>
 							<div class="footer">
 								<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160704-202424577a55788e8aa.png?imageView2/2/w/480" alt="">
@@ -77,11 +81,11 @@
 						</div>
 						<div class="update-content-left">
 							<div class="textarea-content">
-								<textarea name="" id="" placeholder="描述作品,让他更加有生命力"></textarea>
+								<textarea name="" id="desc_content" placeholder="描述作品,让他更加有生命力"></textarea>
 								<i class="emoji-icon"></i>
 							</div>
 							<div class="footer-content">
-								<div class="update-btn">发布作品</div>
+								<div class="update-btn" id="set_work">发布作品</div>
 							</div>
 						</div>
 					</div>
